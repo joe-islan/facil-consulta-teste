@@ -48,15 +48,22 @@ Inicie o container e instale as dependências:
 ./vendor/bin/sail composer install
 ```
 
-Configurar variáveis de ambiente (.env)
+#### Configurar variáveis de ambiente (.env)
 Abra o arquivo .env e configure as variáveis do banco de dados:
+
 DB_CONNECTION
+
 DB_HOST
+
 DB_PORT
+
 DB_DATABASE
+
 DB_USERNAME
+
 DB_PASSWORD
-Gerar chave da aplicação:
+
+#### Gerar chave da aplicação:
 
 ```sh
 ./vendor/bin/sail artisan key:generate
