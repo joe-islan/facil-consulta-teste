@@ -34,15 +34,53 @@ Antes de começar, certifique-se de ter instalado:
 ```
 Ajuste o arquivo `.env` conforme necessário.
 
+markdown
+
+Copiar
 ### 🚀 Subir os Containers e Configurar o Projeto
+
+1. Instalar as dependências via Composer
+
+Se você já tem o Composer instalado localmente:
 ```sh
- make install
+ cp composer install
 ```
-Esse comando executa:
-- **Sobe os containers do Laravel Sail**
-- **Executa as migrações e seeds do banco de dados**
-- **Gera a chave JWT necessária para autenticação**
-- **Cria o link de armazenamento necessário**
+Caso prefira usar o Laravel Sail, primeiro copie o arquivo .env:
+
+```sh
+cp .env.example .env
+```
+Inicie o container e instale as dependências:
+
+```sh
+ cp ./vendor/bin/sail up -d
+./vendor/bin/sail composer install
+```
+
+Configurar variáveis de ambiente (.env)
+Abra o arquivo .env e configure as variáveis do banco de dados:
+DB_CONNECTION
+DB_HOST
+DB_PORT
+DB_DATABASE
+DB_USERNAME
+DB_PASSWORD
+Gerar chave da aplicação:
+
+```sh
+ cp ./vendor/bin/sail artisan key:generate
+ ```
+Gerar chave JWT para autenticação:
+
+```sh
+cp ./vendor/bin/sail artisan jwt:secret --force
+ ```
+Executar migrações e seeds:
+```sh
+cp ./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan db:seed
+```
+
 
 ---
 
