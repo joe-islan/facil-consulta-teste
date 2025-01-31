@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Repositories\Contracts\PacienteRepositoryInterface;
 use App\Models\Paciente;
+use App\Repositories\Contracts\PacienteRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 class PacienteService

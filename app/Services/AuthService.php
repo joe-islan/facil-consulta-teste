@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 
 class AuthService
 {
@@ -24,13 +24,15 @@ class AuthService
 
         return [
             'user' => $user,
-            'token' => $token
+            'token' => $token,
         ];
     }
 
     public function login(array $credentials): ?array
     {
-        if ($token = Auth::guard('api')->attempt($credentials)) {
+        $token = Auth::guard('api')->attempt($credentials);
+
+        if ($token) {
             return $this->respondWithToken($token);
         }
 
@@ -58,7 +60,7 @@ class AuthService
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => Auth::guard('api')->factory()->getTTL() * 60,
-            'user' => Auth::guard('api')->user()
+            'user' => Auth::guard('api')->user(),
         ];
     }
 }

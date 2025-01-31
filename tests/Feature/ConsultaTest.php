@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\Consulta;
 use App\Models\Medico;
 use App\Models\Paciente;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Tests\TestCase;
 
 class ConsultaTest extends TestCase
 {
@@ -30,7 +30,7 @@ class ConsultaTest extends TestCase
         $this->token = Auth::guard('api')->login($this->user);
     }
 
-    public function test_authenticated_user_can_create_consulta()
+    public function testAuthenticatedUserCanCreateConsulta()
     {
         $response = $this->withHeaders([
             'Authorization' => "Bearer $this->token",
@@ -42,7 +42,7 @@ class ConsultaTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJsonStructure([
-                'success', 'message', 'item' => ['id', 'medico_id', 'paciente_id', 'data']
+                'success', 'message', 'item' => ['id', 'medico_id', 'paciente_id', 'data'],
             ]);
 
         $this->assertDatabaseHas('consultas', [
@@ -51,7 +51,7 @@ class ConsultaTest extends TestCase
         ]);
     }
 
-    public function test_unauthenticated_user_cannot_create_consulta()
+    public function testUnauthenticatedUserCannotCreateConsulta()
     {
         Auth::logout();
 
@@ -64,7 +64,7 @@ class ConsultaTest extends TestCase
         $response->assertStatus(401);
     }
 
-    public function test_cannot_create_consulta_with_invalid_medico()
+    public function testCannotCreateConsultaWithInvalidMedico()
     {
         $response = $this->withHeaders([
             'Authorization' => "Bearer $this->token",
@@ -78,7 +78,7 @@ class ConsultaTest extends TestCase
             ->assertJsonValidationErrors(['medico_id']);
     }
 
-    public function test_cannot_create_consulta_with_invalid_paciente()
+    public function testCannotCreateConsultaWithInvalidPaciente()
     {
         $response = $this->withHeaders([
             'Authorization' => "Bearer $this->token",
@@ -92,7 +92,7 @@ class ConsultaTest extends TestCase
             ->assertJsonValidationErrors(['paciente_id']);
     }
 
-    public function test_authenticated_user_can_list_consultas()
+    public function testAuthenticatedUserCanListConsultas()
     {
         Consulta::factory()->create([
             'medico_id' => $this->medico->id,
@@ -106,12 +106,12 @@ class ConsultaTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'success', 'message', 'item'
+                'success', 'message', 'item',
             ])
             ->assertJsonCount(1, 'item');
     }
 
-    public function test_cannot_create_conflicting_consultas_for_same_medico()
+    public function testCannotCreateConflictingConsultasForSameMedico()
     {
         $data = [
             'medico_id' => $this->medico->id,
@@ -131,5 +131,4 @@ class ConsultaTest extends TestCase
         $response->assertStatus(422)
             ->assertJson(['message' => 'O médico já possui uma consulta marcada nesse horário. Escolha um horário com pelo menos 15 minutos de diferença.']);
     }
-
 }

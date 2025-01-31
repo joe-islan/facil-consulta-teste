@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Consulta extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = ['medico_id', 'paciente_id', 'data'];
 
     protected $casts = [
-        'data' => 'datetime'
+        'data' => 'datetime',
     ];
 
     public function medico()

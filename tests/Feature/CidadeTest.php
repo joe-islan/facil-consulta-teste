@@ -2,15 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Models\Cidade;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\Cidade;
 
 class CidadeTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_can_list_cities()
+    public function testCanListCities()
     {
         Cidade::factory()->count(5)->create();
 
@@ -18,12 +18,12 @@ class CidadeTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'success', 'message', 'item'
+                'success', 'message', 'item',
             ])
             ->assertJsonCount(5, 'item');
     }
 
-    public function test_can_search_city_by_name()
+    public function testCanSearchCityByName()
     {
         Cidade::factory()->create(['nome' => 'São Paulo']);
         Cidade::factory()->create(['nome' => 'Rio de Janeiro']);
@@ -32,13 +32,13 @@ class CidadeTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'success', 'message', 'item'
+                'success', 'message', 'item',
             ])
             ->assertJsonCount(1, 'item')
             ->assertJsonFragment(['nome' => 'São Paulo']);
     }
 
-    public function test_city_list_is_ordered_alphabetically()
+    public function testCityListIsOrderedAlphabetically()
     {
         Cidade::factory()->create(['nome' => 'Curitiba']);
         Cidade::factory()->create(['nome' => 'Belo Horizonte']);
@@ -48,7 +48,7 @@ class CidadeTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'success', 'message', 'item'
+                'success', 'message', 'item',
             ])
             ->assertSeeInOrder(['Belo Horizonte', 'Curitiba', 'Natal']);
     }

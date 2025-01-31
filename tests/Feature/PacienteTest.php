@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\Paciente;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Tests\TestCase;
 
 class PacienteTest extends TestCase
 {
@@ -23,7 +23,7 @@ class PacienteTest extends TestCase
         $this->token = Auth::guard('api')->login($this->user);
     }
 
-    public function test_authenticated_user_can_create_paciente()
+    public function testAuthenticatedUserCanCreatePaciente()
     {
         $response = $this->withHeaders([
             'Authorization' => "Bearer $this->token",
@@ -35,7 +35,7 @@ class PacienteTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJsonStructure([
-                'success', 'message', 'item' => ['nome', 'cpf', 'celular']
+                'success', 'message', 'item' => ['nome', 'cpf', 'celular'],
             ]);
 
         $this->assertDatabaseHas('pacientes', [
@@ -43,10 +43,10 @@ class PacienteTest extends TestCase
         ]);
     }
 
-    public function test_unauthenticated_user_cannot_create_paciente()
+    public function testUnauthenticatedUserCannotCreatePaciente()
     {
         Auth::logout();
-        
+
         $response = $this->postJson('/api/v1/pacientes', [
             'nome' => 'Paciente Teste',
             'cpf' => '123.456.789-10',
@@ -56,7 +56,7 @@ class PacienteTest extends TestCase
         $response->assertStatus(401);
     }
 
-    public function test_cannot_create_paciente_with_duplicate_cpf()
+    public function testCannotCreatePacienteWithDuplicateCpf()
     {
         Paciente::factory()->create(['cpf' => '123.456.789-10']);
 
@@ -72,7 +72,7 @@ class PacienteTest extends TestCase
             ->assertJsonValidationErrors(['cpf']);
     }
 
-    public function test_authenticated_user_can_list_pacientes()
+    public function testAuthenticatedUserCanListPacientes()
     {
         Paciente::factory()->count(5)->create();
 
@@ -82,12 +82,12 @@ class PacienteTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'success', 'message', 'item'
+                'success', 'message', 'item',
             ])
             ->assertJsonCount(5, 'item');
     }
 
-    public function test_authenticated_user_can_update_paciente()
+    public function testAuthenticatedUserCanUpdatePaciente()
     {
         $paciente = Paciente::factory()->create([
             'nome' => 'Paciente Original',
@@ -103,7 +103,7 @@ class PacienteTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'success', 'message', 'item' => ['nome', 'celular']
+                'success', 'message', 'item' => ['nome', 'celular'],
             ]);
 
         $this->assertDatabaseHas('pacientes', [
@@ -112,7 +112,7 @@ class PacienteTest extends TestCase
         ]);
     }
 
-    public function test_cannot_update_paciente_with_invalid_data()
+    public function testCannotUpdatePacienteWithInvalidData()
     {
         $paciente = Paciente::factory()->create();
 

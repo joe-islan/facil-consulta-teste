@@ -1,66 +1,148 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📌 API para Gestão de Consultas Médicas
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este repositório contém a implementação de uma API RESTful para gestão de consultas médicas, desenvolvida em **Laravel 10** e utilizando **Laravel Sail** para um ambiente Dockerizado.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Tecnologias Utilizadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Laravel 10** (Framework PHP)
+- **MySQL 8** (Banco de Dados)
+- **Laravel Sail** (Ambiente Docker)
+- **JWT Auth** (Autenticação via Token JWT)
+- **PHP CS Fixer, PHPStan e PHPMD** (Ferramentas de Qualidade de Código)
+- **PHP 8.3**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📦 Instalação e Configuração do Projeto
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🔧 Pré-requisitos
+Antes de começar, certifique-se de ter instalado:
+- **Docker** e **Docker Compose**
+- **Make** (caso queira utilizar atalhos para os comandos do Laravel Sail)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 📥 Clonar o Repositório
+```sh
+ git clone https://github.com/seu-usuario/seu-repositorio.git
+ cd seu-repositorio
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🔧 Configurar Variáveis de Ambiente
+```sh
+ cp .env.example .env
+```
+Ajuste o arquivo `.env` conforme necessário.
 
-## Laravel Sponsors
+### 🚀 Subir os Containers e Configurar o Projeto
+```sh
+ make install
+```
+Esse comando executa:
+- **Sobe os containers do Laravel Sail**
+- **Executa as migrações e seeds do banco de dados**
+- **Gera a chave JWT necessária para autenticação**
+- **Cria o link de armazenamento necessário**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 🎯 Endpoints da API
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 🔐 **Autenticação**
+| Método | Rota            | Descrição                         |
+|--------|----------------|---------------------------------|
+| POST   | `/api/v1/login`    | Login e geração de token JWT  |
+| POST   | `/api/v1/register` | Cadastro de usuário          |
+| POST   | `/api/v1/logout`   | Logout                        |
+| POST   | `/api/v1/refresh`  | Refresh do Token JWT         |
+| GET    | `/api/v1/user`     | Retorna usuário autenticado  |
 
-## Contributing
+### 📍 **Cidades e Médicos**
+| Método | Rota                                | Descrição                              |
+|--------|-------------------------------------|--------------------------------------|
+| GET    | `/api/v1/cidades`                  | Listar cidades                      |
+| GET    | `/api/v1/medicos`                  | Listar médicos                      |
+| GET    | `/api/v1/cidades/{id}/medicos`     | Médicos de uma cidade específica   |
+| POST   | `/api/v1/medicos`                  | Cadastrar médico (requer login)     |
+| GET    | `/api/v1/medicos/{id}/pacientes`   | Listar pacientes do médico (protegido) |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 🏥 **Pacientes e Consultas**
+| Método | Rota                          | Descrição                             |
+|--------|--------------------------------|--------------------------------------|
+| GET    | `/api/v1/pacientes`           | Listar pacientes (protegido)        |
+| POST   | `/api/v1/pacientes`           | Cadastrar paciente (protegido)      |
+| PUT    | `/api/v1/pacientes/{id}`      | Atualizar paciente (protegido)      |
+| GET    | `/api/v1/consultas`           | Listar consultas (protegido)        |
+| POST   | `/api/v1/medicos/consulta`    | Agendar consulta (protegido)        |
+| PUT    | `/api/v1/consultas/{id}`      | Atualizar consulta (protegido)      |
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## ✅ Testes Automatizados
+Para rodar os testes:
+```sh
+ make test
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🛠 Qualidade de Código
 
-## License
+### 📌 **Corrigir Código com PHP CS Fixer**
+```sh
+ make cs-fixer
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 📌 **Análise Estática com PHPStan**
+```sh
+ make phpstan
+```
+
+### 📌 **Análise de Qualidade com PHPMD**
+```sh
+ make phpmd
+```
+
+---
+
+## 🔄 Outras Comandos Úteis
+
+### 📌 Reiniciar Containers
+```sh
+ make restart
+```
+
+### 📌 Acessar o Shell do Container
+```sh
+ make shell
+```
+
+### 📌 Ver Logs da Aplicação
+```sh
+ make logs
+```
+
+### 📌 Derrubar os Containers
+```sh
+ make down
+```
+
+### 📌 Remover Containers e Volumes não utilizados
+```sh
+ make prune
+```
+
+---
+
+## 🚀 Contribuição
+1. **Fork** este repositório
+2. Crie uma **branch** com sua feature (`git checkout -b minha-feature`)
+3. Commit suas alterações (`git commit -m 'Minha feature'`)
+4. Push para a branch (`git push origin minha-feature`)
+5. Abra um **Pull Request**
+
+---
+
+## 📄 Licença
+Este projeto está sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+

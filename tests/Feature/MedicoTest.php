@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-use App\Models\Medico;
 use App\Models\Cidade;
+use App\Models\Medico;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Tests\TestCase;
 
 class MedicoTest extends TestCase
 {
@@ -26,7 +26,7 @@ class MedicoTest extends TestCase
         $this->token = Auth::guard('api')->login($this->user);
     }
 
-    public function test_can_list_medicos()
+    public function testCanListMedicos()
     {
         Medico::factory()->count(3)->create();
 
@@ -34,12 +34,12 @@ class MedicoTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'success', 'message', 'item'
+                'success', 'message', 'item',
             ])
             ->assertJsonCount(3, 'item');
     }
 
-    public function test_can_filter_medicos_by_city()
+    public function testCanFilterMedicosByCity()
     {
         $cidade1 = Cidade::factory()->create(['nome' => 'São Paulo']);
         $cidade2 = Cidade::factory()->create(['nome' => 'Rio de Janeiro']);
@@ -51,13 +51,13 @@ class MedicoTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'success', 'message', 'item'
+                'success', 'message', 'item',
             ])
             ->assertJsonCount(1, 'item')
             ->assertJsonFragment(['nome' => 'Dr. João']);
     }
 
-    public function test_authenticated_user_can_create_medico()
+    public function testAuthenticatedUserCanCreateMedico()
     {
         $response = $this->withHeaders([
             'Authorization' => "Bearer $this->token",
@@ -69,7 +69,7 @@ class MedicoTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJsonStructure([
-                'success', 'message', 'item' => ['nome', 'especialidade', 'cidade_id']
+                'success', 'message', 'item' => ['nome', 'especialidade', 'cidade_id'],
             ]);
 
         $this->assertDatabaseHas('medicos', [
@@ -79,10 +79,10 @@ class MedicoTest extends TestCase
         ]);
     }
 
-    public function test_unauthenticated_user_cannot_create_medico()
+    public function testUnauthenticatedUserCannotCreateMedico()
     {
         Auth::logout();
-        
+
         $response = $this->postJson('/api/v1/medicos', [
             'nome' => 'Dr. Teste',
             'especialidade' => 'Cardiologista',
@@ -92,7 +92,7 @@ class MedicoTest extends TestCase
         $response->assertStatus(401);
     }
 
-    public function test_cannot_create_medico_with_missing_fields()
+    public function testCannotCreateMedicoWithMissingFields()
     {
         $response = $this->withHeaders([
             'Authorization' => "Bearer $this->token",
@@ -105,7 +105,7 @@ class MedicoTest extends TestCase
             ->assertJsonValidationErrors(['nome']);
     }
 
-    public function test_cannot_create_medico_with_invalid_cidade()
+    public function testCannotCreateMedicoWithInvalidCidade()
     {
         $response = $this->withHeaders([
             'Authorization' => "Bearer $this->token",

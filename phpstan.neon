@@ -1,0 +1,37 @@
+parameters:
+    level: 5  # Nível de análise (0 = básico, 9 = mais rigoroso)
+    paths:
+        - app
+        - database
+        - routes
+        - tests
+    excludePaths:
+        - vendor
+        - storage
+        - bootstrap/cache
+    reportUnmatchedIgnoredErrors: false  # Impede erro se um warning não for encontrado
+
+    ignoreErrors:
+        # Métodos mágicos do Eloquent (create, findOrFail, when, where, etc.)
+        - 
+            message: '#Call to an undefined static method App\\Models\\.*::(when|create|findOrFail|where|orderBy|query|inRandomOrder)#'
+            path: app/Repositories/*
+        # Erros do Guard/Auth do Laravel
+        - 
+            message: '#Call to an undefined method Illuminate\\Contracts\\Auth\\Guard::(login|attempt|logout|refresh|factory)#'
+            path: app/Services/AuthService.php
+        # Erro no retorno do auth()->user()
+        - 
+            message: '#Method App\\Services\\AuthService::getUser\(\) should return App\\Models\\User\|null but returns Illuminate\\Contracts\\Auth\\Authenticatable\|null.#'
+            path: app/Services/AuthService.php
+        # Propriedades mágicas nos Models (como $id, $email, etc.)
+        - 
+            message: '#Access to an undefined property App\\Models\\.*::\\\$id#'
+            path: tests/Feature/*
+        - 
+            message: '#Access to an undefined property Illuminate\\Database\\Eloquent\\Collection.*::\\\$id#'
+            path: tests/Feature/*
+        # Ignorar o erro de $this indefinido no routes/console.php
+        - 
+            message: '#Undefined variable: \\\$this#'
+            path: routes/console.php

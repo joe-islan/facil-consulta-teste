@@ -2,17 +2,17 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_register()
+    public function testUserCanRegister()
     {
         $response = $this->postJson('/api/v1/register', [
             'name' => 'Test User',
@@ -22,7 +22,7 @@ class AuthTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJsonStructure([
-                'success', 'message', 'item' => ['user', 'authorization' => ['token', 'type']]
+                'success', 'message', 'item' => ['user', 'authorization' => ['token', 'type']],
             ]);
 
         $this->assertDatabaseHas('users', [
@@ -30,7 +30,7 @@ class AuthTest extends TestCase
         ]);
     }
 
-    public function test_user_cannot_register_with_existing_email()
+    public function testUserCannotRegisterWithExistingEmail()
     {
         User::factory()->create([
             'email' => 'test@example.com',
@@ -46,7 +46,7 @@ class AuthTest extends TestCase
             ->assertJsonValidationErrors(['email']);
     }
 
-    public function test_user_can_login()
+    public function testUserCanLogin()
     {
         $user = User::factory()->create([
             'email' => 'user@example.com',
@@ -60,11 +60,11 @@ class AuthTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'success', 'message', 'item' => ['access_token', 'token_type', 'expires_in', 'user']
+                'success', 'message', 'item' => ['access_token', 'token_type', 'expires_in', 'user'],
             ]);
     }
 
-    public function test_user_cannot_login_with_invalid_credentials()
+    public function testUserCannotLoginWithInvalidCredentials()
     {
         User::factory()->create([
             'email' => 'user@example.com',
@@ -80,7 +80,7 @@ class AuthTest extends TestCase
             ->assertJson(['success' => false, 'error' => 'Não autorizado']);
     }
 
-    public function test_authenticated_user_can_access_protected_route()
+    public function testAuthenticatedUserCanAccessProtectedRoute()
     {
         $user = User::factory()->create();
         $token = Auth::guard('api')->login($user);
@@ -93,7 +93,7 @@ class AuthTest extends TestCase
             ->assertJson(['success' => true, 'item' => ['id' => $user->id, 'email' => $user->email]]);
     }
 
-    public function test_authenticated_user_can_logout()
+    public function testAuthenticatedUserCanLogout()
     {
         $user = User::factory()->create();
         $token = Auth::guard('api')->login($user);
@@ -106,7 +106,7 @@ class AuthTest extends TestCase
             ->assertJson(['success' => true, 'message' => 'Logout realizado com sucesso']);
     }
 
-    public function test_authenticated_user_can_refresh_token()
+    public function testAuthenticatedUserCanRefreshToken()
     {
         $user = User::factory()->create();
         $token = Auth::guard('api')->login($user);
@@ -117,7 +117,7 @@ class AuthTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'success', 'message', 'item' => ['access_token', 'token_type', 'expires_in', 'user']
+                'success', 'message', 'item' => ['access_token', 'token_type', 'expires_in', 'user'],
             ]);
     }
 }

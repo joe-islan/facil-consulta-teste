@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Consulta;
+use Illuminate\Database\Seeder;
 
 class ConsultaSeeder extends Seeder
 {

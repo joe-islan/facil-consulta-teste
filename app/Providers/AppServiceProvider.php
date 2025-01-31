@@ -2,17 +2,17 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use App\Repositories\Contracts\CidadeRepositoryInterface;
 use App\Repositories\CidadeRepository;
-use App\Repositories\Contracts\MedicoRepositoryInterface;
-use App\Repositories\MedicoRepository;
-use App\Repositories\Contracts\PacienteRepositoryInterface;
-use App\Repositories\PacienteRepository;
-use App\Repositories\Contracts\ConsultaRepositoryInterface;
 use App\Repositories\ConsultaRepository;
+use App\Repositories\Contracts\CidadeRepositoryInterface;
+use App\Repositories\Contracts\ConsultaRepositoryInterface;
+use App\Repositories\Contracts\MedicoRepositoryInterface;
+use App\Repositories\Contracts\PacienteRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\MedicoRepository;
+use App\Repositories\PacienteRepository;
 use App\Repositories\UserRepository;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +33,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
     }
 }

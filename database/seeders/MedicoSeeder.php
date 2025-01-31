@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Medico;
+use Illuminate\Database\Seeder;
 
 class MedicoSeeder extends Seeder
 {

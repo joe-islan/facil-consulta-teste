@@ -1,12 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CidadeController;
+use App\Http\Controllers\Api\V1\ConsultaController;
 use App\Http\Controllers\Api\V1\MedicoController;
 use App\Http\Controllers\Api\V1\PacienteController;
-use App\Http\Controllers\Api\V1\ConsultaController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +17,6 @@ use App\Http\Controllers\Api\V1\ConsultaController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
 
 Route::prefix('v1')->group(function () {
     // 📌 ROTAS DE AUTENTICAÇÃO
@@ -38,13 +36,12 @@ Route::prefix('v1')->group(function () {
         Route::controller(AuthController::class)->group(function () {
             Route::post('logout', 'logout');
             Route::post('refresh', 'refresh');
-            Route::get('user', 'me');
+            Route::get('user', 'getAuthenticatedUser');
         });
 
         // 🔒 Médicos (Apenas cadastro protegido)✅
         Route::post('medicos', [MedicoController::class, 'store']);
         Route::get('medicos/{id_medico}/pacientes', [MedicoController::class, 'getPacientesByMedico']);
-
 
         // 🔒 Pacientes (Listagem, cadastro e atualização protegidos)
         Route::controller(PacienteController::class)->group(function () {

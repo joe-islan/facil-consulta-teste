@@ -22,6 +22,7 @@ class PacienteRepository implements PacienteRepositoryInterface
     {
         $paciente = Paciente::findOrFail($id);
         $paciente->update($data);
+
         return $paciente;
     }
 
@@ -44,7 +45,7 @@ class PacienteRepository implements PacienteRepositoryInterface
                     })
                     ->orderBy('data', 'asc'); // Ordena as consultas por data crescente
             }])
-            ->orderByRaw("(SELECT MIN(data) FROM consultas WHERE consultas.paciente_id = pacientes.id AND consultas.medico_id = ?) ASC", [$medicoId])
+            ->orderByRaw('(SELECT MIN(data) FROM consultas WHERE consultas.paciente_id = pacientes.id AND consultas.medico_id = ?) ASC', [$medicoId])
             ->get();
     }
 }

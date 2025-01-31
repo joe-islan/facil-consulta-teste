@@ -3,10 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Cidade;
-use App\Models\Medico;
-use App\Models\Paciente;
-use App\Models\Consulta;
 
 class DatabaseSeeder extends Seeder
 {

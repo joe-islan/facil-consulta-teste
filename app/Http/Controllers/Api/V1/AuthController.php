@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Helpers\ControllerHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\AuthService;
-use App\Helpers\ControllerHelper;
-use Illuminate\Log\Logger;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Log\Logger;
 
 class AuthController extends Controller
 {
     public function __construct(
         private AuthService $authService,
         private Logger $logger,
-        private ControllerHelper $helper
+        private ControllerHelper $helper,
     ) {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
@@ -31,12 +31,12 @@ class AuthController extends Controller
                 'authorization' => [
                     'token' => $data['token'],
                     'type' => 'bearer',
-                ]
+                ],
             ], 201);
         } catch (\Exception $e) {
             $this->logger->error('Erro ao registrar usuário', [
                 'erro' => $e->getMessage(),
-                'dados' => $request->all()
+                'dados' => $request->all(),
             ]);
 
             return $this->helper->errorJsonResponse('Erro interno ao cadastrar usuário', null, 500);
@@ -56,14 +56,14 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             $this->logger->error('Erro ao realizar login', [
                 'erro' => $e->getMessage(),
-                'dados' => $request->all()
+                'dados' => $request->all(),
             ]);
 
             return $this->helper->errorJsonResponse('Erro interno ao realizar login', null, 500);
         }
     }
 
-    public function me(): JsonResponse
+    public function getAuthenticatedUser(): JsonResponse
     {
         return $this->helper->successJsonResponse('Usuário autenticado', $this->authService->getUser());
     }
@@ -71,6 +71,7 @@ class AuthController extends Controller
     public function logout(): JsonResponse
     {
         $this->authService->logout();
+
         return $this->helper->successJsonResponse('Logout realizado com sucesso');
     }
 

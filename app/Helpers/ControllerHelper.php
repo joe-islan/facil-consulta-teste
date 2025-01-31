@@ -16,7 +16,7 @@ class ControllerHelper
         ], $responseCode);
     }
 
-    public function errorJsonResponse(string $error, string $message = null, int $responseCode = Response::HTTP_BAD_REQUEST, $item = null): JsonResponse
+    public function errorJsonResponse(string $error, ?string $message = null, int $responseCode = Response::HTTP_BAD_REQUEST, $item = null): JsonResponse
     {
         return response()->json([
             'success' => false,

@@ -22,6 +22,7 @@ class ConsultaRepository implements ConsultaRepositoryInterface
     {
         $consulta = Consulta::findOrFail($id);
         $consulta->update($data);
+
         return $consulta;
     }
 
@@ -30,9 +31,8 @@ class ConsultaRepository implements ConsultaRepositoryInterface
         return Consulta::where('medico_id', $medicoId)
             ->whereBetween('data', [
                 now()->parse($data)->subMinutes(14),
-                now()->parse($data)->addMinutes(14)
+                now()->parse($data)->addMinutes(14),
             ])
             ->exists();
     }
-
 }

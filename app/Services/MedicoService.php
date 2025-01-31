@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Repositories\Contracts\MedicoRepositoryInterface;
 use App\Models\Medico;
+use App\Repositories\Contracts\MedicoRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 class MedicoService
