@@ -23,9 +23,9 @@ class ConsultaService
     public function create(array $data): Consulta
     {
         // Verifica se já existe uma consulta para esse médico no mesmo horário
-        $existeConsulta = $this->consultaRepository->existsConsultaNoMesmoHorario($data['medico_id'], $data['data']);
+        $existsAppointment = $this->consultaRepository->existsAppointmentAtSameTime($data['medico_id'], $data['data']);
 
-        if ($existeConsulta) {
+        if ($existsAppointment) {
             throw \Illuminate\Validation\ValidationException::withMessages(['data' => ['O médico já possui uma consulta marcada nesse horário. Escolha um horário com pelo menos 15 minutos de diferença.']]);
         }
 

@@ -30,8 +30,8 @@ class PacienteService
         return $this->pacienteRepository->update($id, $data);
     }
 
-    public function getByMedico(int $medicoId, ?bool $apenasAgendadas = null, ?string $nome = null): Collection
+    public function getByDoctor(int $medicoId, ?bool $apenasAgendadas = null, ?string $nome = null): Collection
     {
-        return $this->pacienteRepository->getByMedico($medicoId, $apenasAgendadas, $nome);
+        return $this->pacienteRepository->getByDoctor($medicoId, $apenasAgendadas, $nome);
     }
 }

@@ -26,7 +26,7 @@ class PacienteRepository implements PacienteRepositoryInterface
         return $paciente;
     }
 
-    public function getByMedico(int $medicoId, ?bool $apenasAgendadas = null, ?string $nome = null): Collection
+    public function getByDoctor(int $medicoId, ?bool $apenasAgendadas = null, ?string $nome = null): Collection
     {
         return Paciente::whereHas('consultas', function ($query) use ($medicoId, $apenasAgendadas) {
             $query->where('medico_id', $medicoId); // Filtra pelo médico da rota

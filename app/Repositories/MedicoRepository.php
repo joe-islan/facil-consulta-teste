@@ -21,7 +21,7 @@ class MedicoRepository implements MedicoRepositoryInterface
             ->get();
     }
 
-    public function findByCidade(int $cidadeId, $nome = null): Collection
+    public function findByCity(int $cidadeId, $nome = null): Collection
     {
         if ($nome) {
             $nome = preg_replace('/\b(Dra?|Dr)\.? /i', '', $nome);

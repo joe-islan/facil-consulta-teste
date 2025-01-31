@@ -13,5 +13,5 @@ interface ConsultaRepositoryInterface
 
     public function update(int $id, array $data): Consulta;
 
-    public function existsConsultaNoMesmoHorario(int $medicoId, string $data): bool;
+    public function existsAppointmentAtSameTime(int $medicoId, string $data): bool;
 }

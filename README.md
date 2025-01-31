@@ -143,6 +143,7 @@ Para rodar os testes:
 
 ---
 
-## 📄 Licença
-Este projeto está sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+## 📄 Documentação da API
+A documentação da API está disponível em [Swagger UI](http://localhost/api/documentation).
+
 

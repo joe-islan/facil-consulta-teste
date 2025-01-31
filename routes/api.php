@@ -28,7 +28,7 @@ Route::prefix('v1')->group(function () {
     // 📌 ROTAS PÚBLICAS✅
     Route::get('cidades', [CidadeController::class, 'index']);
     Route::get('medicos', [MedicoController::class, 'index']);
-    Route::get('cidades/{cidade_id}/medicos', [MedicoController::class, 'medicosPorCidade']);
+    Route::get('cidades/{cidade_id}/medicos', [MedicoController::class, 'doctorsByCity']);
 
     // 📌 ROTAS PROTEGIDAS (EXIGEM AUTENTICAÇÃO)
     Route::middleware('auth:api')->group(function () {
@@ -41,7 +41,7 @@ Route::prefix('v1')->group(function () {
 
         // 🔒 Médicos (Apenas cadastro protegido)✅
         Route::post('medicos', [MedicoController::class, 'store']);
-        Route::get('medicos/{id_medico}/pacientes', [MedicoController::class, 'getPacientesByMedico']);
+        Route::get('medicos/{id_medico}/pacientes', [MedicoController::class, 'getPatientsByDoctor']);
 
         // 🔒 Pacientes (Listagem, cadastro e atualização protegidos)
         Route::controller(PacienteController::class)->group(function () {

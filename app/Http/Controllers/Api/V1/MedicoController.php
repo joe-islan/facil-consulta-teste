@@ -19,7 +19,7 @@ class MedicoController extends Controller
         private Logger $logger,
         private ControllerHelper $helper,
     ) {
-        $this->middleware('auth:api', ['except' => ['index', 'medicosPorCidade']]);
+        $this->middleware('auth:api', ['except' => ['index', 'doctorsByCity']]);
     }
 
     /**
@@ -102,10 +102,10 @@ class MedicoController extends Controller
      *     )
      * )
      */
-    public function medicosPorCidade(Request $request, int $cidade_id): JsonResponse
+    public function doctorsByCity(Request $request, int $cidade_id): JsonResponse
     {
         try {
-            $medicos = $this->medicoService->findByCidade($cidade_id, $request->query('nome'));
+            $medicos = $this->medicoService->findByCity($cidade_id, $request->query('nome'));
 
             return $this->helper->successJsonResponse('Lista de médicos por cidade recuperada com sucesso', $medicos);
         } catch (\Exception $e) {
@@ -200,12 +200,12 @@ class MedicoController extends Controller
      *     )
      * )
      */
-    public function getPacientesByMedico(Request $request, int $medicoId): JsonResponse
+    public function getPatientsByDoctor(Request $request, int $medicoId): JsonResponse
     {
         try {
             $apenasAgendadas = filter_var($request->query('apenas-agendadas'), FILTER_VALIDATE_BOOLEAN);
             $nome = $request->query('nome');
-            $pacientes = $this->pacienteService->getByMedico($medicoId, $apenasAgendadas, $nome);
+            $pacientes = $this->pacienteService->getByDoctor($medicoId, $apenasAgendadas, $nome);
 
             return $this->helper->successJsonResponse('Lista de pacientes recuperada com sucesso', $pacientes);
         } catch (\Exception $e) {

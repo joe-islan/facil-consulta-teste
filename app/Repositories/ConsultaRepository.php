@@ -26,7 +26,7 @@ class ConsultaRepository implements ConsultaRepositoryInterface
         return $consulta;
     }
 
-    public function existsConsultaNoMesmoHorario(int $medicoId, string $data): bool
+    public function existsAppointmentAtSameTime(int $medicoId, string $data): bool
     {
         return Consulta::where('medico_id', $medicoId)
             ->whereBetween('data', [

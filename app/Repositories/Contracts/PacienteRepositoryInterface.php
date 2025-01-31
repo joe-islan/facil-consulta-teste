@@ -13,5 +13,5 @@ interface PacienteRepositoryInterface
 
     public function update(int $id, array $data): Paciente;
 
-    public function getByMedico(int $medicoId, ?bool $apenasAgendadas = null, ?string $nome = null): Collection;
+    public function getByDoctor(int $medicoId, ?bool $apenasAgendadas = null, ?string $nome = null): Collection;
 }

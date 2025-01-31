@@ -20,9 +20,9 @@ class MedicoService
         return $this->medicoRepository->all($nome);
     }
 
-    public function findByCidade(int $cidadeId, $nome = null): Collection
+    public function findByCity(int $cidadeId, $nome = null): Collection
     {
-        return $this->medicoRepository->findByCidade($cidadeId, $nome);
+        return $this->medicoRepository->findByCity($cidadeId, $nome);
     }
 
     public function create(array $data): Medico
