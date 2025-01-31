@@ -22,6 +22,39 @@ class MedicoController extends Controller
         $this->middleware('auth:api', ['except' => ['index', 'medicosPorCidade']]);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/medicos",
+     *     summary="Lista todos os médicos",
+     *     description="Retorna a lista de médicos cadastrados no sistema.",
+     *     tags={"Médicos"},
+     *
+     *     @OA\Parameter(
+     *         name="nome",
+     *         in="query",
+     *         description="Filtrar médicos pelo nome",
+     *
+     *         @OA\Schema(type="string")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de médicos recuperada com sucesso",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Lista de médicos recuperada com sucesso"),
+     *             @OA\Property(property="data", type="array", @OA\Items(type="object"))
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro interno do servidor"
+     *     )
+     * )
+     */
     public function index(Request $request): JsonResponse
     {
         try {
@@ -35,6 +68,40 @@ class MedicoController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/cidades/{cidade_id}/medicos",
+     *     summary="Lista médicos por cidade",
+     *     description="Retorna a lista de médicos em uma cidade específica.",
+     *     tags={"Médicos"},
+     *
+     *     @OA\Parameter(
+     *         name="cidade_id",
+     *         in="path",
+     *         description="ID da cidade",
+     *         required=true,
+     *
+     *         @OA\Schema(type="integer")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de médicos recuperada com sucesso",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Lista de médicos por cidade recuperada com sucesso"),
+     *             @OA\Property(property="data", type="array", @OA\Items(type="object"))
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro interno do servidor"
+     *     )
+     * )
+     */
     public function medicosPorCidade(Request $request, int $cidade_id): JsonResponse
     {
         try {
@@ -48,6 +115,43 @@ class MedicoController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/v1/medicos",
+     *     summary="Cadastra um novo médico",
+     *     description="Cria um novo cadastro de médico no sistema.",
+     *     tags={"Médicos"},
+     *     security={{"bearerAuth": {}}},
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *
+     *         @OA\JsonContent(
+     *             required={"nome", "especialidade"},
+     *
+     *             @OA\Property(property="nome", type="string", example="Dr. João Silva"),
+     *             @OA\Property(property="especialidade", type="string", example="Cardiologia")
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=201,
+     *         description="Médico cadastrado com sucesso",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Médico cadastrado com sucesso"),
+     *             @OA\Property(property="data", type="object")
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro interno do servidor"
+     *     )
+     * )
+     */
     public function store(StoreMedicoRequest $request): JsonResponse
     {
         try {
@@ -61,6 +165,41 @@ class MedicoController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/medicos/{medicoId}/pacientes",
+     *     summary="Lista os pacientes de um médico",
+     *     description="Retorna a lista de pacientes de um médico específico.",
+     *     tags={"Médicos"},
+     *     security={{"bearerAuth": {}}},
+     *
+     *     @OA\Parameter(
+     *         name="medicoId",
+     *         in="path",
+     *         description="ID do médico",
+     *         required=true,
+     *
+     *         @OA\Schema(type="integer")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de pacientes recuperada com sucesso",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Lista de pacientes recuperada com sucesso"),
+     *             @OA\Property(property="data", type="array", @OA\Items(type="object"))
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro interno do servidor"
+     *     )
+     * )
+     */
     public function getPacientesByMedico(Request $request, int $medicoId): JsonResponse
     {
         try {
