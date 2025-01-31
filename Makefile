@@ -24,6 +24,7 @@ help:
 # ✅ Instala dependências e configura ambiente
 install:
 	./vendor/bin/sail up -d
+	sleep 10  # Espera 10 segundos para garantir que o MySQL está pronto
 	./vendor/bin/sail artisan migrate --seed
 	./vendor/bin/sail artisan storage:link
 	./vendor/bin/sail artisan jwt:secret --force
