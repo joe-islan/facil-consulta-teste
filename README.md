@@ -79,6 +79,11 @@ Executar migrações e seeds:
 ./vendor/bin/sail artisan db:seed
 ```
 
+Se quiser executar os teste, rode o banco de teste e Execute as migrações e seeds:
+```sh
+./vendor/bin/sail artisan migrate --env=testing --seed
+```
+
 
 ---
 
