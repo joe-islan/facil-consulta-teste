@@ -895,7 +895,7 @@
                 ],
                 "summary": "Lista médicos por cidade",
                 "description": "Retorna a lista de médicos em uma cidade específica.",
-                "operationId": "0fdfe665465924ce4fbb09cce06b4fc0",
+                "operationId": "d3db5042f87dd2c146080cf9184b834b",
                 "parameters": [
                     {
                         "name": "cidade_id",
@@ -947,7 +947,7 @@
                 ],
                 "summary": "Lista os pacientes de um médico",
                 "description": "Retorna a lista de pacientes de um médico específico.",
-                "operationId": "6b1073a5732d7971d0f011f51c5ce620",
+                "operationId": "4aa58aacf27b24a8256fa981a6c54630",
                 "parameters": [
                     {
                         "name": "medicoId",

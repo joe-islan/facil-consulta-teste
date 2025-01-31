@@ -143,6 +143,16 @@ Para rodar os testes:
 
 ---
 
+## Considerações Técnicas
+
+### 🔍 Padronização dos nomes de métodos
+Para manter consistência no projeto, foi adotada a seguinte convenção:
+
+Arquivos, rotas e classes permanecem em português, pois representam entidades do domínio (ex.: MedicoController, MedicoService).
+Métodos seguem um padrão em inglês, garantindo legibilidade e alinhamento com boas práticas.
+
+---
+
 ## 📄 Documentação da API
 A documentação da API está disponível em [Swagger UI](http://localhost/api/documentation).
 
