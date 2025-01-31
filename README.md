@@ -24,8 +24,8 @@ Antes de começar, certifique-se de ter instalado:
 
 ### 📥 Clonar o Repositório
 ```sh
- git clone https://github.com/seu-usuario/seu-repositorio.git
- cd seu-repositorio
+ git clone https://github.com/joe-islan/facil-consulta-teste.git
+ cd facil-consulta-teste
 ```
 
 ### 🔧 Configurar Variáveis de Ambiente
